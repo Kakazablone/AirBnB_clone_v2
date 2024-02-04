@@ -11,9 +11,10 @@ env.key_filename = '~/.ssh/school'
 
 def do_deploy(archive_path):
     """Deploy web files to server"""
-    if not exists(archive_path):
-        return False
     try:
+        if not exists(archive_path):
+            return False
+
         # Upload archive
         put(archive_path, '/tmp/')
 
@@ -41,7 +42,8 @@ def do_deploy(archive_path):
             /data/web_static/current'.format(timestamp))
 
         print("New Version Deployed!")
-        return True
-    except Exception as e:
-        print(f"Error during deployment: {e}")
+
+    except:
+        print(f"Error during deployment")
         return False
+    return True
