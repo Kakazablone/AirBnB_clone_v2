@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """Fabric script (based on the file 1-pack_web_static.py)
 that distributes an archive to your web servers"""
-from fabric import SerialGroup, env
+from fabric import Group, env
 from os.path import exists
 
 env.hosts = ["100.25.102.191", "100.26.161.26"]
@@ -13,7 +13,7 @@ def do_deploy(archive_path):
     """Deploy web files to server"""
     if not exists(archive_path):
         return False
-    with SerialGroup(*env.hosts,
+    with Group(*env.hosts,
                      user=env.user,
                      connect_kwargs={"key_filename": env.key_filename})as conn:
         # Upload archive
