@@ -20,20 +20,20 @@ def do_deploy(archive_path):
     timestamp = archive_path.split('.')[0][-14:]
     sudo('mkdir -p \
             /data/web_static/releases/web_static_{}/'
-            .format(timestamp))
+         .format(timestamp))
 
     # Uncompress archive, delete archive, Move files into Host
     # web_static then remove the src web_static dir
     sudo('tar -vxzf /tmp/web_static_{}.tgz -C \
         /data/web_static/releases/web_static_{}/'
-            .format(timestamp, timestamp))
+         .format(timestamp, timestamp))
     sudo('rm /tmp/web_static_{}.tgz'.format(timestamp))
     sudo('mv /data/web_static/releases/web_static_{}/web_static/* \
         /data/web_static/releases/web_static_{}/'
-            .format(timestamp, timestamp))
+         .format(timestamp, timestamp))
     sudo('rm -rf \
         /data/web_static/releases/web_static_{}/web_static'
-            .format(timestamp))
+         .format(timestamp))
 
     # Delete pre-existing sym link and re-establish
     sudo('rm -rf /data/web_static/current')
