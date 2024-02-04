@@ -11,7 +11,9 @@ env.key_filename = '~/.ssh/school'
 
 def do_deploy(archive_path):
     """Deploy web files to server"""
-    if exists(archive_path):
+    try:
+        if not exists(archive_path):
+            return False
         # Upload archive
         put(archive_path, '/tmp/')
 
@@ -37,6 +39,7 @@ def do_deploy(archive_path):
         sudo('rm -rf /data/web_static/current')
         sudo('ln -s /data/web_static/releases/web_static_{}/ \
             /data/web_static/current'.format(timestamp))
+
         return True
-    else:
+    except Exception as e:
         return False
