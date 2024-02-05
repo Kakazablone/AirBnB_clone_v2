@@ -41,5 +41,5 @@ def do_deploy(archive_path):
             /data/web_static/current'.format(timestamp))
 
         return True
-    except Exception as e:
+    except:
         return False
