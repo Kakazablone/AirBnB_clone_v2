@@ -3,7 +3,7 @@
 import uuid
 from datetime import datetime
 from sqlalchemy.orm import declarative_base
-from sqlalchemy import Column, String, Integer, ForeignKey, DateTime
+from sqlalchemy import Column, String, DateTime
 from os import getenv
 
 
@@ -30,14 +30,16 @@ class BaseModel:
         if not kwargs:
             self.created_at = self.updated_at = datetime.utcnow()
         else:
-            self.updated_at = \
-                datetime.strptime(kwargs.get('updated_at',
-                                             datetime.now().isoformat()),
-                                  '%Y-%m-%dT%H:%M:%S.%f').isoformat()
-            self.created_at = \
-                datetime.strptime(kwargs.get('created_at',
-                                             datetime.now().isoformat()),
-                                  '%Y-%m-%dT%H:%M:%S.%f').isoformat()
+            self.updated_at = kwargs.get('updated_at',
+                                             datetime.now())
+            self.created_at = kwargs.get('created_at',
+                                             datetime.now())
+            if isinstance(self.updated_at, str):
+                self.updated_at = datetime.strptime\
+                    (self.updated_at, '%Y-%m-%dT%H:%M:%S.%f')
+            if isinstance(self.created_at, str):
+                self.created_at = datetime.strptime\
+                    (self.created_at, '%Y-%m-%dT%H:%M:%S.%f')
 
             kwargs.pop('__class__', None)
 
