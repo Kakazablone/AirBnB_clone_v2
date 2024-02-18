@@ -36,7 +36,7 @@ def number(n):
     """Displays “n is a number” only if n is an integer"""
     if isinstance(n, int):
         return "{} is a number".format(n)
-    
+
 
 @app.route('/number_template/<int:n>', strict_slashes=False)
 def number_template(n):
